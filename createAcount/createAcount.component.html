@@ -1,0 +1,66 @@
+<ion-content>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+<form [formGroup] = "createAcountForm" (submit)="onSubmit()">
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input type="text" class="form-control" id="firstName"  placeholder="first name" formControlName="firstName" [ngClass]="{'is-invalid': !createAcountForm.get('firstName').valid
+                                                                                                                                              && (createAcountForm.get('firstName').touched || createAcountForm.get('firstName').dirty || FormSubmited)}">
+
+       <span *ngIf="createAcountForm.get('firstName').errors?.required && (createAcountForm.get('firstName').touched || FormSubmited)"> your name is required</span>
+       <span *ngIf="createAcountForm.get('firstName').invalid && !createAcountForm.get('firstName').errors?.required && (createAcountForm.get('firstName').touched || FormSubmited)"> your name is to short</span>
+      <div formArrayName="secondary" >
+          <div *ngFor="let name of secondary.controls; let i = index"
+                [formGroupName]="i">
+      <label attr.for="{{'secondaryName' + i}}">Secondary Name</label>
+      <input type="text" class="form-control" id="{{'secondaryName' + i}}"  placeholder="secondary name" formControlName="secondaryName" [ngClass]="{'is-invalid': createAcountForm.get('secondary').invalid &&
+                                                                                                                                                       (createAcountForm.get('secondary').touched || createAcountForm.get('secondary').dirty || FormSubmited)}">
+          </div>
+    </div>
+   </div>
+
+   <div class="addName" (click)="addName()"> add name</div>
+
+    <div class="form-group">
+        <label for="userName">User Name</label>
+        <input type="text" class="form-control" id="userName" placeholder="user name" formControlName="userName" [ngClass]="{'is-invalid': createAcountForm.get('userName').invalid && (createAcountForm.get('userName').touched || FormSubmited)}">
+        <span *ngIf="createAcountForm.get('userName').errors?.required && (createAcountForm.get('userName').touched || FormSubmited)"> your user name is required</span>
+        <span *ngIf="createAcountForm.get('userName').invalid && !createAcountForm.get('userName').errors?.required && createAcountForm.get('userName').touched"> your user name is to short</span>
+    </div>
+
+      <div class="form-group">
+        <label for="emailAddress">email address</label>
+        <input type="email" 
+        class="form-control" 
+        id="emailAddress" 
+        placeholder="email address" 
+        formControlName = "emailAddress" 
+        [ngClass]="{'is-invalid': createAcountForm.get('emailAddress').invalid && 
+                                  (createAcountForm.get('emailAddress').touched || 
+                                   FormSubmited)}">
+        <span *ngIf="createAcountForm.get('emailAddress').errors?.required && (createAcountForm.get('emailAddress').touched || FormSubmited)">your email address is required</span>
+      </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" 
+             class="form-control" 
+             id="password"
+             placeholder="Password"
+             formControlName="password"
+             [ngClass]="{'is-invalid': createAcountForm.get('password').invalid &&
+                                       (createAcountForm.get('password').touched || FormSubmited) }">     
+      <span *ngIf="createAcountForm.get('password').errors?.required && (createAcountForm.get('password').touched || FormSubmited)">password is required</span>
+    </div>
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input" id="notify" formControlName="notify" (click)="changeEmailStatus()">
+      <label class="form-check-label" for="notify" >send me emails</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  </ion-infinite-scroll>
+</ion-content>
+  {{createAcountForm.value | json}}
+  {{createAcountForm.get('emailAddress').valid}}
+  
+
+ 
